@@ -6,5 +6,26 @@ nodes:
     - containerPort: 30080  # NodePort
       hostPort: 30080
       protocol: TCP
+  extraMounts:
+    - hostPath: /Users/jhnam/workspace/airflow-on-k8s/dags
+      containerPath: /mnt/airflow-dags
+      readOnly: false
+    - hostPath: /Users/jhnam/workspace/airflow-on-k8s/apps
+      containerPath: /mnt/airflow-apps
+      readOnly: false
 - role: worker
+  extraMounts:
+    - hostPath: /Users/jhnam/workspace/airflow-on-k8s/dags
+      containerPath: /mnt/airflow-dags
+      readOnly: false
+    - hostPath: /Users/jhnam/workspace/airflow-on-k8s/apps
+      containerPath: /mnt/airflow-apps
+      readOnly: false
 - role: worker
+  extraMounts:
+    - hostPath: /Users/jhnam/workspace/airflow-on-k8s/dags
+      containerPath: /mnt/airflow-dags
+      readOnly: false
+    - hostPath: /Users/jhnam/workspace/airflow-on-k8s/apps
+      containerPath: /mnt/airflow-apps
+      readOnly: false

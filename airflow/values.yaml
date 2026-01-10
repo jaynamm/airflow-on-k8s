@@ -387,10 +387,24 @@ env: []
 #   value: ""
 
 # Volumes for all airflow containers
-volumes: []
+volumes:
+  - name: local-dags
+    hostPath:
+      path: /mnt/airflow-dags
+      type: Directory
+  - name: local-apps
+    hostPath:
+      path: /mnt/airflow-apps
+      type: Directory
 
 # VolumeMounts for all airflow containers
-volumeMounts: []
+volumeMounts:
+  - name: local-dags
+    mountPath: /opt/airflow/dags
+    readOnly: false
+  - name: local-apps
+    mountPath: /opt/airflow/apps
+    readOnly: false
 
 # Secrets for all airflow containers
 secret: []
@@ -2863,6 +2877,7 @@ config:
     flower_url_prefix: '{{ ternary "" .Values.ingress.flower.path (eq .Values.ingress.flower.path "/") }}'
     worker_concurrency: 16
   scheduler:
+    dag_dir_list_interval: 5
     standalone_dag_processor: '{{ ternary "True" "False" (or (semverCompare ">=3.0.0" .Values.airflowVersion) (.Values.dagProcessor.enabled | default false)) }}'
     # statsd params included for Airflow 1.10 backward compatibility; moved to [metrics] in 2.0
     statsd_on: '{{ ternary "True" "False" .Values.statsd.enabled }}'
@@ -2956,7 +2971,7 @@ dags:
     ## optional subpath for dag volume mount
     subPath: ~
   gitSync:
-    enabled: true
+    enabled: false
 
     # git repo clone url
     # ssh example: git@github.com:apache/airflow.git
