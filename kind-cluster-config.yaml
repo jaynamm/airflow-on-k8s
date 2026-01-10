@@ -6,26 +6,30 @@ nodes:
     - containerPort: 30080  # NodePort
       hostPort: 30080
       protocol: TCP
+  # IMPORTANT: Update the hostPath values below to match your local directory structure
+  # Replace <ABSOLUTE_PATH_TO_PROJECT> with the full path to this project directory
+  # Example (macOS): /Users/yourname/workspace/airflow-on-k8s
+  # Example (Linux): /home/yourname/workspace/airflow-on-k8s
   extraMounts:
-    - hostPath: /Users/jhnam/workspace/airflow-on-k8s/dags
+    - hostPath: <ABSOLUTE_PATH_TO_PROJECT>/dags
       containerPath: /mnt/airflow-dags
       readOnly: false
-    - hostPath: /Users/jhnam/workspace/airflow-on-k8s/apps
+    - hostPath: <ABSOLUTE_PATH_TO_PROJECT>/apps
       containerPath: /mnt/airflow-apps
       readOnly: false
 - role: worker
   extraMounts:
-    - hostPath: /Users/jhnam/workspace/airflow-on-k8s/dags
+    - hostPath: <ABSOLUTE_PATH_TO_PROJECT>/dags
       containerPath: /mnt/airflow-dags
       readOnly: false
-    - hostPath: /Users/jhnam/workspace/airflow-on-k8s/apps
+    - hostPath: <ABSOLUTE_PATH_TO_PROJECT>/apps
       containerPath: /mnt/airflow-apps
       readOnly: false
 - role: worker
   extraMounts:
-    - hostPath: /Users/jhnam/workspace/airflow-on-k8s/dags
+    - hostPath: <ABSOLUTE_PATH_TO_PROJECT>/dags
       containerPath: /mnt/airflow-dags
       readOnly: false
-    - hostPath: /Users/jhnam/workspace/airflow-on-k8s/apps
+    - hostPath: <ABSOLUTE_PATH_TO_PROJECT>/apps
       containerPath: /mnt/airflow-apps
       readOnly: false
